@@ -1,12 +1,5 @@
+INSERT INTO person (name,first_name,email,password)
+VALUES ("bob","jean","kk@l.com","$2a$10$0e0VsNHNubX94fd/YPAjLux/HYiZHBbMUV/WWBzhzuwo0dJRGj2oC");
 
-INSERT INTO person (name,first_name,active,email,password)
- VALUES ('pop','jjjppppppppppppp',1,'a@oms.com','456');
- INSERT INTO person (name,first_name,active,email,password)
-  VALUES ('pop2','jjjppppppppppppp',1,'a@o.com','456');
-
-
-
-INSERT INTO administrator (id_person,number_administrator)
-VALUES (1,1);
-INSERT INTO HR (id_person,number_HR)
-VALUES (2,1);
+INSERT INTO person (name,first_name,email,password)
+VALUES ("bb","jean","k@l.com","$2a$10$nBx/oXXoUToxIlwrgSdZa..LbAAox3Gm4WdzuX4swUaA0xS8MM.EC");
