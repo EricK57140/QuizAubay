@@ -1,29 +1,35 @@
 package com.aubay.quiz.model;
 
+
 import lombok.Getter;
 import lombok.Setter;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
 import java.io.Serializable;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.fasterxml.jackson.annotation.JsonView;
+import javax.persistence.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-//@Inheritance(strategy = InheritanceType.JOINED)
-public class Person implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public   class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer personID;
+    private Integer id_Person;
+
     private String name;
-    private  String firstName;
-    private  String email;
-   private String password;
 
-    public Person() {
+    private String firstName;
 
-    }
+    private String password;
+
+    @Column(unique = true)
+    private String email;
+
+    private boolean active;
+
+    public Person(){}
+
 }
