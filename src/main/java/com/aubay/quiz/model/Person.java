@@ -12,8 +12,8 @@ import java.io.Serializable;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-//@Inheritance(strategy = InheritanceType.JOINED)
-public class Person implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Person  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,7 @@ public class Person implements Serializable {
     private  String email;
    private String password;
 
-
+    @ManyToOne
+    private Hr hr;
 
 }

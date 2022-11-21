@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
@@ -24,12 +25,16 @@ public class Security extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private  UserDetailsService userDetailsServiceQuiz;
 
-//    @Autowired
-//    private JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
+        auth.userDetailsService(userDetailsServiceQuiz);
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -40,13 +45,15 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .csrf().disable() //désactive le token de formulaire présent par défaut (permet de lutter contre les failles de sécurité CSAF)
                 .authorizeRequests()
                 .antMatchers("/connexion").permitAll()
-                .antMatchers("/**").permitAll()
-                .and();
-              //  .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/hr/**").hasAnyRole("HR","ADMIN")
+                //.antMatchers("/test").permitAll()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //stateless -> désactive le management par session
 
         //méthode UsernamePasswordAuthenticationFilter va vérifier le nom d'utilisateur et le mot de passe
-       // http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+       http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     //Quand utilisation de la classe security, spring va générer une nouvelle instance des beans déclarés dans cette classe
