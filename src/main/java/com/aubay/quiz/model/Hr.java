@@ -12,8 +12,7 @@ import java.util.Optional;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Hr extends Person{
-
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true)
     private int numberHr;
 
 

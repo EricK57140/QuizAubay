@@ -20,6 +20,8 @@ public class Person  {
     private Integer personID;
     private String name;
     private  String firstName;
+
+    @Column(unique = true)
     private  String email;
    private String password;
 

@@ -47,30 +47,23 @@ public class AdministratorController {
         this.administratorDao = administratorDao;
     }
 
-//    @PostMapping("/admin/hr
-//    /create")
-//    public String createHr(@RequestBody Person person, @RequestHeader(value="Authorization") String autorisation){
-//
-//        person.setPassword(encoder.encode(person.getPassword()));
-//        try{
-//            this.personDao.save(person);
-//        }
-//        catch(Exception e){
-//            return "Cette adresse mail est déjà utilisée par un compte utilisateur";
-//        }
-//        return "L'utilisateur "+person.getName()+" "+person.getFirstName()+" est créé avec le mot de passe "+person.getPassword();
-//    }
+    @PostMapping("/admin/createadminaccount")
+    public String createAdminAccount(@RequestBody Administrator administrator){
 
-    @PostMapping("/admin/hr/create")
-    public String createHr(@RequestBody Hr hr, @RequestHeader(value="Authorization") String autorisation){
-
-        hr.setPassword(encoder.encode(hr.getPassword()));
+        if(administratorDao.numberAdministratorMax() == null){
+            administrator.setNumberAdministrator(1);
+        }else {
+            administrator.setNumberAdministrator(administratorDao.numberAdministratorMax() + 1);
+        }
+        administrator.setPassword(encoder.encode(administrator.getPassword()));
         try{
-            this.personDao.save(hr);
+            this.administratorDao.save(administrator);
         }
         catch(Exception e){
             return "Cette adresse mail est déjà utilisée par un compte utilisateur";
         }
-        return "L'utilisateur "+hr.getName()+" "+hr.getFirstName()+" est créé avec le mot de passe "+hr.getPassword();
+        return "L'utilisateur "+administrator.getName()+" "+administrator.getFirstName()+" est créé avec le mot de passe "+administrator.getPassword();
     }
+
+
 }

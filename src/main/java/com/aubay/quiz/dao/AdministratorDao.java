@@ -13,4 +13,7 @@ public interface AdministratorDao extends JpaRepository <Administrator, Integer>
 
     @Query("FROM Administrator a WHERE a.personID = :personID")
     Optional<Administrator> findByPersonId(@Param("personID") int personID);
+
+    @Query("SELECT MAX(numberAdministrator) FROM Administrator")
+    Integer numberAdministratorMax();
 }

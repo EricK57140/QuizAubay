@@ -16,6 +16,6 @@ public interface HrDao extends JpaRepository <Hr, Integer> {
     Optional<Hr> findByPersonId(@Param("personID") int personID);
 
     @Query("SELECT MAX(numberHr) FROM Hr")
-    int number();
+    Integer numberHrMax();
 
 }

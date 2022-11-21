@@ -43,18 +43,18 @@ public class HrController  {
         this.hrDao = hrDao;
     }
 
-    @PostMapping("/hr/create")
+    @PostMapping("/hr/createhraccount")
     public  String createHr(@RequestBody Hr hr) {
 
-
-        hr.setNumberHr(hrDao.number() + 1);
+        if(hrDao.numberHrMax() == null){
+            hr.setNumberHr(1);
+        }else {
+            hr.setNumberHr(hrDao.numberHrMax() + 1);
+        }
         hr.setPassword(encoder.encode(hr.getPassword()));
 
         try {
-
-
             this.hrDao.save(hr);
-
         }
         catch(Exception e){
             return "Cette adresse mail est déjà utilisée par un compte utilisateur";
@@ -62,5 +62,6 @@ public class HrController  {
        // return "L'utilisateur "+person.getName()+" "+person.getFirstName()+" est créé avec le mot de passe "+person.getPassword();
         return "L'utilisateur "+hr.getName()+" "+hr.getFirstName()+" est créé avec le mot de passe "+hr.getPassword();
     }
+
 
 }
