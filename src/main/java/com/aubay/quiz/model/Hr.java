@@ -12,6 +12,7 @@ import java.util.Optional;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Hr extends Person{
+
     @Column(unique = true)
     private int numberHr;
 

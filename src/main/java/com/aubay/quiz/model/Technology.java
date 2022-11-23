@@ -2,32 +2,22 @@ package com.aubay.quiz.model;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Person  implements  Serializable{
+public class Technology {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer personID;
-    private String name;
-    private  String firstName;
+    private  Integer IdTechnology;
 
     @Column(unique = true)
-    private  String email;
-    private String password;
-    private boolean active;
-
-    @ManyToOne
-    private Hr hr;
+    private String NameTechnology;
 
     @ManyToOne
     private Administrator administrator;

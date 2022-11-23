@@ -54,6 +54,7 @@ public class PersonController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             person.getEmail(), person.getPassword()));
+
         }
         catch(BadCredentialsException e){
 //            throw new Exception(e);

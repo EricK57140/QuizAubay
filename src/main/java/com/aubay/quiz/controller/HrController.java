@@ -1,7 +1,10 @@
 package com.aubay.quiz.controller;
 
+import com.aubay.quiz.dao.CandidateDao;
 import com.aubay.quiz.dao.HrDao;
 import com.aubay.quiz.dao.PersonDao;
+import com.aubay.quiz.model.Administrator;
+import com.aubay.quiz.model.Candidate;
 import com.aubay.quiz.model.Hr;
 import com.aubay.quiz.model.Person;
 import com.aubay.quiz.security.JwtUtil;
@@ -37,6 +40,9 @@ public class HrController  {
     @Autowired
     PersonDao personDao;
 
+    @Autowired
+    private CandidateDao candidateDao;
+
 
 
     public HrController(HrDao hrDao) {
@@ -44,7 +50,13 @@ public class HrController  {
     }
 
     @PostMapping("/hr/createhraccount")
-    public  String createHr(@RequestBody Hr hr) {
+    public  String createHr(@RequestBody Hr hr, @RequestHeader(value="Authorization") String autorisation) {
+
+        String token = autorisation.substring(7);
+        String idAdministrator = jwtUtil.getTokenBody(token).get("personId").toString();
+        Hr h = hrDao.getByPersonId(Integer.parseInt(idAdministrator));
+        hr.setHr(h);
+
 
         if(hrDao.numberHrMax() == null){
             hr.setNumberHr(1);
@@ -52,7 +64,7 @@ public class HrController  {
             hr.setNumberHr(hrDao.numberHrMax() + 1);
         }
         hr.setPassword(encoder.encode(hr.getPassword()));
-
+        hr.setActive(true);
         try {
             this.hrDao.save(hr);
         }
@@ -63,5 +75,29 @@ public class HrController  {
         return "L'utilisateur "+hr.getName()+" "+hr.getFirstName()+" est créé avec le mot de passe "+hr.getPassword();
     }
 
+    @PostMapping("/hr/createcandidateaccount")
+    public  String createCandidate(@RequestBody Candidate candidate , @RequestHeader(value="Authorization") String autorisation) {
 
+        String token = autorisation.substring(7);
+        String idAdministrator = jwtUtil.getTokenBody(token).get("personId").toString();
+        Hr h = hrDao.getByPersonId(Integer.parseInt(idAdministrator));
+        candidate.setHr(h);
+
+        if(candidateDao.numberCandidateMax() == null){
+            candidate.setNumberCandidate(1);
+        }else {
+            candidate.setNumberCandidate(candidateDao.numberCandidateMax() + 1);
+        }
+        candidate.setPassword(encoder.encode(candidate.getPassword()));
+        candidate.setActive(true);
+        try {
+            this.candidateDao.save(candidate);
+        }
+        catch(Exception e){
+            return "Cette adresse mail est déjà utilisée par un compte utilisateur";
+        }
+
+        return "L'utilisateur "+candidate.getName()+" "+candidate.getFirstName()+" est créé avec le mot de passe "+candidate.getPassword()
+                + " numéro de candidat " + candidate.getNumberCandidate();
+    }
 }
