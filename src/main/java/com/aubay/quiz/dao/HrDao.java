@@ -21,4 +21,7 @@ public interface HrDao extends JpaRepository <Hr, Integer> {
     @Query("SELECT MAX(numberHr) FROM Hr")
     Integer numberHrMax();
 
+    @Query("FROM Person p WHERE p.email = :email")
+    Hr getByEmail(@Param("email") String email);
+
 }

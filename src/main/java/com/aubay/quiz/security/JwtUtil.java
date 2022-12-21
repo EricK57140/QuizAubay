@@ -36,6 +36,14 @@ public class JwtUtil {
         Map<String, Object> data = new HashMap<>();
         data.put("personId", userDetailsQuiz.getPerson().getPersonID());
 
+        String listRights = userDetailsQuiz
+                .getAuthorities()
+                .stream()
+                .map(role -> role.getAuthority())
+                .collect(Collectors.joining(","));
+
+        data.put("rights", listRights);
+
         return Jwts.builder()
                 .setClaims(data) //on personnalise le body du token
                 .setSubject(userDetails.getUsername()) //on récupère l'adresse mail par la méthode getUsername (cf. UserDetailsLocParc) et on le rentre dans le body du token

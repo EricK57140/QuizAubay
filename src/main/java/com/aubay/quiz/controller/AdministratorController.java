@@ -135,4 +135,12 @@ public class AdministratorController {
         this.personDao.save(p);
         return "Person "+ p.getName() +" "+ p.getFirstName()+" is disabled ";
     }
+
+    @PostMapping("/admin/person/enable/{id}")
+    public String enablePerson(@PathVariable int id){
+        Person p  = personDao.getById(id);
+        p.setActive(true);
+        this.personDao.save(p);
+        return "Person "+ p.getName() +" "+ p.getFirstName()+" is enabled ";
+    }
 }

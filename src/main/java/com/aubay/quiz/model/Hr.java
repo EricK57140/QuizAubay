@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -20,6 +21,7 @@ public class Hr extends Person{
     public Hr(){
 
     }
+
 
 
 }

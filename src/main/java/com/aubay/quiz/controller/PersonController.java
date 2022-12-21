@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -100,5 +101,14 @@ public class PersonController {
 //        // return "L'utilisateur "+person.getName()+" "+person.getFirstName()+" est créé avec le mot de passe "+person.getPassword();
 //        return "L'utilisateur "+person.getName()+" "+person.getFirstName()+" est créé avec le mot de passe "+person.getPassword();
 //    }
+
+    @GetMapping("/hr/list-person")
+
+    public List<Person> listPerson() {
+        return this.personDao.findAll();
+    }
+
+
+
 }
 

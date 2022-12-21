@@ -13,10 +13,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -100,4 +97,14 @@ public class HrController  {
         return "L'utilisateur "+candidate.getName()+" "+candidate.getFirstName()+" est créé avec le mot de passe "+candidate.getPassword()
                 + " numéro de candidat " + candidate.getNumberCandidate();
     }
+
+    @PostMapping("/hr/modifycandidateaccount")
+    public  String modifyCandidate(@RequestBody Candidate candidate){
+        this.candidateDao.save(candidate);
+        return candidate.getName() + " has been modify";
+    }
+
+    @GetMapping("/hr/email/{email}")
+    public Hr hrByEmail(@PathVariable String email) {
+        return this.hrDao.getByEmail(email);}
 }

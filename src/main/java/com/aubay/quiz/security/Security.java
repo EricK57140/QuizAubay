@@ -47,7 +47,7 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .antMatchers("/connexion").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/hr/**").hasRole("HR")
-                //.antMatchers("/test").permitAll()
+                //.antMatchers("/**").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         //stateless -> désactive le management par session

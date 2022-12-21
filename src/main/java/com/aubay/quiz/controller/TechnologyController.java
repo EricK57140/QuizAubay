@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.http.ResponseEntity;
 import java.io.Serializable;
 import java.util.Optional;
-
+import java.util.List;
 
 @RestController
 public class TechnologyController  {
@@ -35,7 +35,7 @@ public class TechnologyController  {
     @Autowired
     AdministratorDao administratorDao;
 
-    @PostMapping("/admin/technology/create")
+    @PostMapping("/hr/technology/create")
     public String createTechnology(@RequestBody Technology technology, @RequestHeader(value="Authorization") String autorisation ){
         String token = autorisation.substring(7);
         String idAdministrator = jwtUtil.getTokenBody(token).get("personId").toString();
@@ -50,4 +50,27 @@ public class TechnologyController  {
         }
         return "The technology " + technology.getNameTechnology() + " has been created";
     }
+
+    @DeleteMapping("/hr/technology/{id}")
+    public ResponseEntity<Integer> deleteTechnology(@PathVariable int id){
+
+      Optional <Technology> technologyToDelete = technologyDao.findById(id);
+//
+//      if(technologyToDelete.isPresent()){
+//           return ResponseEntity.ok(technologyToDelete.get().getIdTechnology());
+//       } else {
+//           return ResponseEntity.noContent().build();
+//      }
+
+    if(technologyDao.existsById(id)) {
+           this.technologyDao.deleteById(id);
+           return ResponseEntity.ok(id);
+     } else{         return ResponseEntity.noContent().build();     }
+    }
+    @GetMapping("/hr/list-technology")
+
+    public List<Technology> technologyList() {
+        return this.technologyDao.findAll();
+    }
+
 }
