@@ -1,5 +1,6 @@
 package com.aubay.quiz.controller;
 
+import com.aubay.quiz.View.ViewEmailCheck;
 import com.aubay.quiz.dao.CandidateDao;
 import com.aubay.quiz.dao.HrDao;
 import com.aubay.quiz.dao.PersonDao;
@@ -9,6 +10,7 @@ import com.aubay.quiz.model.Hr;
 import com.aubay.quiz.model.Person;
 import com.aubay.quiz.security.JwtUtil;
 import com.aubay.quiz.security.UserDetailsServiceQuiz;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -98,13 +100,30 @@ public class HrController  {
                 + " numéro de candidat " + candidate.getNumberCandidate();
     }
 
-    @PostMapping("/hr/modifycandidateaccount")
-    public  String modifyCandidate(@RequestBody Candidate candidate){
-        this.candidateDao.save(candidate);
-        return candidate.getName() + " has been modify";
-    }
+
 
     @GetMapping("/hr/email/{email}")
+    @JsonView(ViewEmailCheck.class)
     public Hr hrByEmail(@PathVariable String email) {
         return this.hrDao.getByEmail(email);}
+
+
+    @GetMapping("/hr/emailperson/{email}")
+    public Person personByEmailPerson(@PathVariable String email) {
+        return this.hrDao.getByEmailPerson(email);}
+
+    @GetMapping("/hr/emailpersonstr/{email}")
+    public String personByEmailPerson3(@PathVariable String email) {
+        return this.hrDao.getByEmailPersonStr2(email);}
+
+
+    @GetMapping("/hr/emailpersonTry/{email}")
+    public Person personByEmailPerson2(@PathVariable String email) {
+        return this.hrDao.getByEmailPersonStr(email);}
+
+    @GetMapping("/hr/candidate/{id}")
+    public Person PersonById(@PathVariable int id) {
+        return this.personDao.getByPersonId(id);
+    }
+
 }

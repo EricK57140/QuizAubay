@@ -1,10 +1,11 @@
 package com.aubay.quiz.model;
 
+import com.aubay.quiz.View.ViewEmailCheck;
 import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -22,8 +23,12 @@ public class Person  implements  Serializable{
     private  String firstName;
 
     @Column(unique = true)
+    @JsonView(ViewEmailCheck.class)
     private  String email;
+
+
     private String password;
+
     private boolean active;
 
     @ManyToOne

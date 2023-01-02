@@ -1,5 +1,6 @@
 package com.aubay.quiz.dao;
 
+import com.aubay.quiz.model.Person;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,4 +25,16 @@ public interface HrDao extends JpaRepository <Hr, Integer> {
     @Query("FROM Person p WHERE p.email = :email")
     Hr getByEmail(@Param("email") String email);
 
+    @Query("FROM Person p WHERE p.email = :email")
+    Person getByEmailPerson(@Param("email") String email);
+
+    @Query("SELECT email FROM Person p WHERE p.email = :email")
+    Person getByEmailPersonStr(@Param("email") String email);
+
+    @Query("SELECT email FROM Person p WHERE p.email = :email")
+    String getByEmailPersonStr2(@Param("email") String email);
+
+    @Modifying
+    @Query("UPDATE Person p set p.name=:name WHERE p.personID = :personID")
+    void modifyCandidate(@Param("personID")int personID,@Param("name") String name);
 }
