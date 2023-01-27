@@ -1,6 +1,7 @@
 package com.aubay.quiz.model;
 
 import com.aubay.quiz.View.ViewEmailCheck;
+import com.aubay.quiz.View.ViewQuestions;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ public class Person  implements  Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(ViewQuestions.class)
     private Integer personID;
     private String name;
     private  String firstName;

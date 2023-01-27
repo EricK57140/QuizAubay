@@ -13,6 +13,8 @@ import com.aubay.quiz.security.UserDetailsServiceQuiz;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -75,7 +77,7 @@ public class HrController  {
     }
 
     @PostMapping("/hr/createcandidateaccount")
-    public  String createCandidate(@RequestBody Candidate candidate , @RequestHeader(value="Authorization") String autorisation) {
+    ResponseEntity<Void> createCandidate(@RequestBody Candidate candidate , @RequestHeader(value="Authorization") String autorisation) {
 
         String token = autorisation.substring(7);
         String idAdministrator = jwtUtil.getTokenBody(token).get("personId").toString();
@@ -93,17 +95,22 @@ public class HrController  {
             this.candidateDao.save(candidate);
         }
         catch(Exception e){
-            return "Cette adresse mail est déjà utilisée par un compte utilisateur";
+            return ResponseEntity.notFound().build();
         }
 
-        return "L'utilisateur "+candidate.getName()+" "+candidate.getFirstName()+" est créé avec le mot de passe "+candidate.getPassword()
-                + " numéro de candidat " + candidate.getNumberCandidate();
+        return ResponseEntity.ok().build();
     }
 
 
+    @PostMapping("/hr/person/disable/{id}")
+    public String disablePerson(@PathVariable int id){
+        Person p  = personDao.getById(id);
+        p.setActive(false);
+        this.personDao.save(p);
+        return "Person "+ p.getName() +" "+ p.getFirstName()+" is disabled ";
+    }
 
     @GetMapping("/hr/email/{email}")
-    @JsonView(ViewEmailCheck.class)
     public Hr hrByEmail(@PathVariable String email) {
         return this.hrDao.getByEmail(email);}
 
@@ -121,9 +128,48 @@ public class HrController  {
     public Person personByEmailPerson2(@PathVariable String email) {
         return this.hrDao.getByEmailPersonStr(email);}
 
+    @GetMapping("/hr/emailperson")
+    public ResponseEntity<Void> checkEmail(@RequestParam("email") String email) {
+        if (personDao.findByEmail(email).isPresent()) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
     @GetMapping("/hr/candidate/{id}")
     public Person PersonById(@PathVariable int id) {
         return this.personDao.getByPersonId(id);
+    }
+
+    @PostMapping("/hr/modifycandidate/{id}")
+    ResponseEntity <Void> modifyCandidate(@PathVariable int id, @Param("name") String name
+    ,@Param("firstName") String firstName
+
+
+    ){
+
+        Person p  = personDao.getById(id);
+       // if(name != "")
+        p.setName(name);
+        //if(firstName != "")
+        p.setFirstName(firstName);
+        this.personDao.save(p);
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("/hr/modifycandidate/{id}/{name}")
+    public String modifyCandidate5(@PathVariable int id,@PathVariable String name){
+        Person p  = personDao.getById(id);
+        p.setName(name);
+
+        this.personDao.save(p);
+        return "Person "+ p.getName() +" "+ p.getFirstName()+" is disabled ";
+    }
+    @PostMapping("/hr/modifycandidate2/{id}/{firstName}")
+    public String modifyCandidateFirstname(@PathVariable int id,@PathVariable String firstName){
+        Person p  = personDao.getById(id);
+
+        p.setFirstName(firstName);
+        this.personDao.save(p);
+        return "Person "+ p.getName() +" "+ p.getFirstName()+" is disabled ";
     }
 
 }

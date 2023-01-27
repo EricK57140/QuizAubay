@@ -1,5 +1,7 @@
 package com.aubay.quiz.model;
 
+import com.aubay.quiz.View.ViewQuestions;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,11 +16,14 @@ public class Technology {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(ViewQuestions.class)
     private  Integer IdTechnology;
+    @JsonView(ViewQuestions.class)
+//    @Column(unique = true)
+    private String nameTechnology;
 
-    @Column(unique = true)
-    private String NameTechnology;
 
+    private boolean active;
     @ManyToOne
-    private Administrator administrator;
+    private Hr hr;
 }

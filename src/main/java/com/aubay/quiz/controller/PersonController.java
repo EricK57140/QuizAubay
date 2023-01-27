@@ -103,9 +103,10 @@ public class PersonController {
 //    }
 
     @GetMapping("/hr/list-person")
-
     public List<Person> listPerson() {
-        return this.personDao.findAll();
+
+
+        return this.personDao.getListPersonActive();
     }
 
 
