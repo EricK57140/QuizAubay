@@ -29,6 +29,19 @@ VALUES
 (1,"Yes",1,1),(1,"No",0,1),
 (1,"No",1,2),(1,"Yes",0,2);
 
+
+INSERT INTO test(active, name_test)
+VALUES
+(1,"Java débutant"),
+(1,"C# confirmé");
+
+INSERT INTO test_question(test_id,question_id)
+VALUES
+(1,1),
+(1,2),
+(2,2);
+
+
 ----
 --INSERT INTO candidate ( personId, number_candidate)
 --VALUES(3,1);

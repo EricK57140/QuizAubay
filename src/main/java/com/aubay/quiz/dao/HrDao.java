@@ -35,6 +35,6 @@ public interface HrDao extends JpaRepository <Hr, Integer> {
     String getByEmailPersonStr2(@Param("email") String email);
 
     @Modifying
-   @Query("UPDATE Person p set p.name=:name, p.firstName= :firstName WHERE p.personID = :personID")
+    @Query("UPDATE Person p set p.name=:name, p.firstName= :firstName WHERE p.personID = :personID")
     void modifyCandidate(@Param("personID")int personID,@Param("name") String name,@Param("firstName") String firstName);
 }

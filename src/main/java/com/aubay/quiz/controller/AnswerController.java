@@ -51,7 +51,7 @@ public class AnswerController {
 
     @PostMapping("/hr/answer/create")
     ResponseEntity<Void> createAnswer(@RequestBody Answers answers,  @RequestHeader(value="Authorization") String autorisation,
-                                        @Param("idTQuestions") int idQuestions
+                                        @Param("idQuestions") int idQuestions
                                     //  @Param("correct") String answerCorrect
 
 
@@ -60,9 +60,6 @@ public class AnswerController {
         answers.setActive(true);
         Questions questions= questionDao.getById(idQuestions);
         answers.setQuestions(questions);
-//        if(answerCorrect == "yes"){
-//            answers.setCorrect(true);
-//        }
 
 
         try {
@@ -76,5 +73,21 @@ public class AnswerController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/hr/answer/{id}")
+    @JsonView( ViewAnswers.class)
+    public Optional<Answers> answerById(@PathVariable int id) {
+        return this.answersDao.findById(id);
+    }
 
+
+    /**
+     * Logical delete of an answer
+     */
+    @PostMapping("/hr/answer/disable/{id}")
+    ResponseEntity<Void> disableAnswer(@PathVariable int id){
+        Answers a  = answersDao.getById(id);
+        a.setActive(false);
+        this.answersDao.save(a);
+        return ResponseEntity.ok().build();
+    }
 }

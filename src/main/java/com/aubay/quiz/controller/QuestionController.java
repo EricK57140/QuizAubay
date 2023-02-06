@@ -72,6 +72,7 @@ public class QuestionController {
         questions.setTechnology(technology);
 
 
+
         try {
             int id = this.questionDao.save(questions).getIdQuestions();
             return new ResponseEntity(id, HttpStatus.CREATED);
@@ -104,10 +105,29 @@ public class QuestionController {
         return this.questionDao.findAll();
     }
 
-    @GetMapping("/hr/list-answers")
+    @GetMapping("/hr/list-questions-by-test/{id}")
+    @JsonView(ViewQuestions.class)
+    public List<Questions> listQuestionsByTest(@PathVariable int id) {
+        return this.questionDao.listQuestionsByTest(id);
+    }
+
+    @GetMapping("/hr/list-questions-test/{id}")
+    @JsonView(ViewQuestions.class)
+    public List<Questions> listQuestionsPageTest(@PathVariable int id) {
+        return this.questionDao.listQuestionsPageTest(id);
+    }
+
+
+    /**
+     * @param id
+     * @return
+     */
+    @GetMapping("/hr/list-answers/{id}")
     @JsonView(ViewAnswers.class)
-    public List<Answers> answersList() {
-        return this.answersDao.findAll();
+    public List<Answers> answersList(@PathVariable int id) {
+
+        return this.answersDao.getListAnswers(id);
+
     }
 
     @GetMapping("/hr/question/{id}")
@@ -115,20 +135,6 @@ public class QuestionController {
     public Optional<Questions> QuestionById(@PathVariable int id) {
         return this.questionDao.findById(id);
     }
-//    @PostMapping("/hr/modifyquestion/{id}")
-//    ResponseEntity <Void> modifyQuestion(@PathVariable int id, @Param("name") String name
-//            ,@Param("firstName") String firstName
-//
-//
-//    ){
-//
-//        Person p  = personDao.getById(id);
-//        // if(name != "")
-//        p.setName(name);
-//        //if(firstName != "")
-//        p.setFirstName(firstName);
-//        this.personDao.save(p);
-//        return ResponseEntity.ok().build();
-//    }
+
 
 }

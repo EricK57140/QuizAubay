@@ -102,6 +102,9 @@ public class HrController  {
     }
 
 
+    /**
+     * Logical delete of a candidate
+     */
     @PostMapping("/hr/person/disable/{id}")
     public String disablePerson(@PathVariable int id){
         Person p  = personDao.getById(id);
@@ -148,9 +151,9 @@ public class HrController  {
     ){
 
         Person p  = personDao.getById(id);
-       // if(name != "")
+
         p.setName(name);
-        //if(firstName != "")
+
         p.setFirstName(firstName);
         this.personDao.save(p);
         return ResponseEntity.ok().build();

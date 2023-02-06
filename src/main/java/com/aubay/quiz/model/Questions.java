@@ -2,6 +2,7 @@ package com.aubay.quiz.model;
 
 import com.aubay.quiz.View.ViewAnswers;
 import com.aubay.quiz.View.ViewQuestions;
+import com.aubay.quiz.View.ViewTest;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,15 +19,15 @@ public class Questions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView({ViewQuestions.class,ViewAnswers.class})
+    @JsonView({ViewQuestions.class,ViewAnswers.class,ViewTest.class})
     private Integer idQuestions;
-    @JsonView(ViewQuestions.class)
+    @JsonView({ViewQuestions.class,ViewTest.class})
     private String questionTitle;
-    @JsonView(ViewQuestions.class)
+    @JsonView({ViewQuestions.class,ViewTest.class})
     private Integer scoreByQuestion;
-    @JsonView(ViewQuestions.class)
+    @JsonView({ViewQuestions.class,ViewTest.class})
     private Integer timer;
-    @JsonView(ViewQuestions.class)
+    @JsonView({ViewQuestions.class, ViewTest.class})
     private boolean active;
 
     public Questions() {
@@ -41,5 +42,8 @@ public class Questions {
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "questions")
     @JsonView({ViewQuestions.class})
     private List<Answers> listAnswers  ;
+
+//    @ManyToMany(mappedBy = "questionsList")
+//    private List<Test> Tests;
 
 }

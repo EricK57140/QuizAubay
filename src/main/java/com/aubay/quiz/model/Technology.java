@@ -19,7 +19,7 @@ public class Technology {
     @JsonView(ViewQuestions.class)
     private  Integer IdTechnology;
     @JsonView(ViewQuestions.class)
-//    @Column(unique = true)
+    @Column(unique = true)
     private String nameTechnology;
 
 
