@@ -22,7 +22,16 @@ public interface QuestionDao extends JpaRepository<Questions,Integer>  {
     @Query("FROM Questions q WHERE q.id NOT IN (SELECT tq.questions.id FROM TestQuestion tq WHERE tq.test.id = :testId)")
     List<Questions> listQuestionsPageTest(@Param("testId") int testId);
 
+    @Query("FROM Questions q WHERE q.id NOT IN (SELECT tq.questions.id FROM TestQuestion tq WHERE tq.test.id = :testId) and  q.technology.IdTechnology=:idTechno")
+    List<Questions> findQuestionsByTyping(@Param("testId") int testId,@Param("idTechno") Integer idTechno);
 
+    @Query("FROM Questions q WHERE q.id NOT IN (SELECT tq.questions.id FROM TestQuestion tq WHERE tq.test.id = :testId) and q.questionTitle LIKE %:search% ")
+    List<Questions> findQuestionsByTypingSearch(@Param("testId") int testId,@Param("search") String search);
 
+    @Query("FROM Questions q WHERE q.id NOT IN (SELECT tq.questions.id FROM TestQuestion tq WHERE tq.test.id = :testId) and q.questionTitle LIKE %:search% and  q.technology.IdTechnology=:idTechno")
+    List<Questions> findQuestionsByTypingComplete(@Param("testId") int testId,@Param("search") String search,@Param("idTechno") Integer idTechno);
+
+    @Query("FROM Questions q WHERE  q.questionTitle LIKE %:search% ")
+    List<Questions> findQuestionsByTypingSearchSimple(@Param("search") String search);
 
 }

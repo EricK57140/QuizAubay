@@ -27,13 +27,17 @@ public class Answers {
     private boolean active;
     @JsonView({ViewQuestions.class,ViewAnswers.class})
     private boolean correct;
+    @JsonView({ViewQuestions.class,ViewAnswers.class})
+    private Integer score;
 
 
     @ManyToOne
     @JsonView(ViewAnswers.class)
     private Questions questions;
 
-
+    @ManyToOne
+    @JsonView(ViewAnswers.class)
+    private TestResult testResult;
 
 
 

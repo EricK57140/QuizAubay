@@ -1,5 +1,7 @@
 package com.aubay.quiz.model;
 
+import com.aubay.quiz.View.ViewTest;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,8 +16,11 @@ import java.io.Serializable;
 public class TestQuestion {
 
     @Id
+    @JsonView(ViewTest.class)
     private Integer testId;
+
     @Id
+    @JsonView(ViewTest.class)
     private Integer questionId;
     @ManyToOne
     @MapsId("test_id")
@@ -40,7 +45,12 @@ public class TestQuestion {
 
     }
 
-
+    public KeyTestQuestion getKeyTestQuestion() {
+        KeyTestQuestion key = new KeyTestQuestion();
+        key.setTestId(this.testId);
+        key.setQuestionId(this.questionId);
+        return key;
+    }
 
 
 

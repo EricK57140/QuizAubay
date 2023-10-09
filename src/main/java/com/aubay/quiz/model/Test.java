@@ -1,16 +1,14 @@
 package com.aubay.quiz.model;
 
-import java.util.*;
-
-import com.aubay.quiz.View.ViewAnswers;
-import com.aubay.quiz.View.ViewQuestions;
 import com.aubay.quiz.View.ViewTest;
+import com.aubay.quiz.View.ViewTestAssigned;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -20,11 +18,11 @@ public class Test {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(ViewTest.class)
+    @JsonView({ViewTest.class,ViewTestAssigned.class})
     private Integer idTest;
-    @JsonView(ViewTest.class)
+    @JsonView({ViewTest.class,ViewTestAssigned.class})
     private String nameTest;
-    @JsonView(ViewTest.class)
+    @JsonView({ViewTest.class,ViewTestAssigned.class})
     private boolean active;
 //    private  Date dateTest;
 //    private String testDifficulty;
@@ -37,6 +35,10 @@ public class Test {
 
     @ManyToOne
     private Hr hr;
+
+//    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<TestQuestion> testQuestions;
+
 
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JsonView(ViewTest.class)

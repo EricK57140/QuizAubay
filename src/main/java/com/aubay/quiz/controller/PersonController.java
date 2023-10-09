@@ -69,6 +69,7 @@ public class PersonController {
         Map<String,String> retour = new HashMap<>();
 
         retour.put("token",jwtUtil.generateToken(userDetails));
+
         return retour;
     }
 

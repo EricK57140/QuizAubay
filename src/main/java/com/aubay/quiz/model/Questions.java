@@ -24,8 +24,8 @@ public class Questions {
     @JsonView({ViewQuestions.class,ViewTest.class})
     private String questionTitle;
     @JsonView({ViewQuestions.class,ViewTest.class})
-    private Integer scoreByQuestion;
-    @JsonView({ViewQuestions.class,ViewTest.class})
+//    private Integer scoreByQuestion;
+//    @JsonView({ViewQuestions.class,ViewTest.class})
     private Integer timer;
     @JsonView({ViewQuestions.class, ViewTest.class})
     private boolean active;
@@ -42,6 +42,11 @@ public class Questions {
     @OneToMany(cascade = CascadeType.PERSIST,mappedBy = "questions")
     @JsonView({ViewQuestions.class})
     private List<Answers> listAnswers  ;
+
+
+
+
+
 
 //    @ManyToMany(mappedBy = "questionsList")
 //    private List<Test> Tests;

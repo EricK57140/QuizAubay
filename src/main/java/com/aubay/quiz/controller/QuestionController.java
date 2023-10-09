@@ -110,6 +110,11 @@ public class QuestionController {
     public List<Questions> listQuestionsByTest(@PathVariable int id) {
         return this.questionDao.listQuestionsByTest(id);
     }
+    @GetMapping("/candidate/list-questions-by-test/{id}")
+    @JsonView(ViewQuestions.class)
+    public List<Questions> listQuestionsByTestCandidate(@PathVariable int id) {
+        return this.questionDao.listQuestionsByTest(id);
+    }
 
     @GetMapping("/hr/list-questions-test/{id}")
     @JsonView(ViewQuestions.class)
@@ -130,11 +135,68 @@ public class QuestionController {
 
     }
 
+    @GetMapping("/candidate/list-answers/{id}")
+    @JsonView(ViewAnswers.class)
+    public List<Answers> answersListByCandidate(@PathVariable int id) {
+
+        return this.answersDao.getListAnswers(id);
+
+    }
+
+    @GetMapping("/candidate/{id}")
+    @JsonView(ViewAnswers.class)
+    public List<Answers> answersListCandidate(@PathVariable int id) {
+
+        return this.answersDao.getListAnswers(id);
+
+    }
+
     @GetMapping("/hr/question/{id}")
     @JsonView(ViewQuestions.class)
     public Optional<Questions> QuestionById(@PathVariable int id) {
         return this.questionDao.findById(id);
     }
 
+    @GetMapping("/hr/questions-by-test-searchbar/{id}")
+    @JsonView(ViewQuestions.class)
+    public List<Questions> listQuestionsByTest(@PathVariable int id,@Param("search") String search,
+                                               @Param("idTechno") int idTechno                            ) {
 
+        if (search == "" && idTechno == 0){
+            return this.questionDao.listQuestionsPageTest(id);}
+
+        else if(search == ""){
+        return this.questionDao.findQuestionsByTyping(id,idTechno);}
+        else if(search !="" && idTechno != 0){
+
+        return this.questionDao.findQuestionsByTypingComplete(id,search,idTechno);
+
+        }
+        else if( idTechno == 0){
+            return this.questionDao.findQuestionsByTypingSearch(id,search);
+
+        }
+
+
+        return null;
+    }
+    @GetMapping("/hr/questions-by--searchbar/")
+    @JsonView(ViewQuestions.class)
+    public List<Questions> listQuestionsBySearch(@Param("search") String search
+                                                                 ) {
+
+        if (search == ""){
+            return this.questionDao.findAll();}
+
+
+        else if(search !="" ){
+
+            return this.questionDao.findQuestionsByTypingSearchSimple(search);
+
+        }
+
+
+
+        return null;
+    }
 }
