@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface TestAssignationDao extends JpaRepository<TestAssignation,Integer> {
 
 
-    @Query("From TestAssignation ta WHERE ta.candidate.id = :candidateId")
+    @Query("From TestAssignation ta WHERE ta.candidate.id = :candidateId and ta.active = 1")
     List<TestAssignation> getListTestAssigned(@Param("candidateId") int candidateId);
 
     @Query("From TestAssignation ta WHERE ta.idTestAssignation = :testId")

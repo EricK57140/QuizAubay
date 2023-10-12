@@ -75,11 +75,10 @@ public class TestAssignationController {
     ResponseEntity<Void> deleteTestAssigned(
             @Param("idTestAssignation") int idTestAssignation){
 
-       TestAssignation testAssignation = new TestAssignation();
-        testAssignation.setIdTestAssignation(idTestAssignation);
-
+       TestAssignation testAssignation = testAssignationDao.getById(idTestAssignation);
+        testAssignation.setActive(false);
         try {
-            this.testAssignationDao.delete(testAssignation);
+            this.testAssignationDao.save(testAssignation);
 
         }
         catch(Exception e){
