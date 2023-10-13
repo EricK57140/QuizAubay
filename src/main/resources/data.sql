@@ -42,10 +42,10 @@ VALUES
 (1,"num x = 5",0,6,0),(1,"int x = 5",1,6,1),(1,"x = 5",0,6,0),(1,"float x = 5",0,6,0);
 
 
-INSERT INTO test(active, name_test)
+INSERT INTO test(active, name_test,hr_personid)
 VALUES
-(1,"Java débutant"),
-(1,"C# confirmé");
+(1,"Java débutant",2),
+(1,"C# confirmé",2);
 
 INSERT INTO test_question(test_id,question_id)
 VALUES
