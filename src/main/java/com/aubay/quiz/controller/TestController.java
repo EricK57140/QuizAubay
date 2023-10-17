@@ -122,6 +122,12 @@ public class TestController {
         return this.testDao.getListTests();
     }
 
+    @GetMapping("/hr/list-test-by-id/{id}")
+    @JsonView(ViewTest.class)
+    public List<Test> testListById(@PathVariable int id) {
+        return this.testDao.getListTestsById(id);
+    }
+
     @GetMapping("/hr/test/{id}")
     @JsonView(ViewTest.class)
     public Optional<Test> testById(@PathVariable int id) {
