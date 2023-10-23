@@ -20,6 +20,9 @@ public interface CandidateDao  extends JpaRepository<Candidate, Integer> {
     @Query("FROM Candidate a WHERE a.active =1")
     List<Candidate> getListCandidateActive();
 
+    @Query("FROM Candidate a WHERE a.active =1 and a.hr.personID = :id")
+    List<Candidate> getListCandidateActiveByIdHr(@Param("id") int id);
+
     @Query("FROM Person p WHERE p.email = :email")
     Candidate getCandidateByEmail(@Param("email") String email);
 

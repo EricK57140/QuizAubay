@@ -42,10 +42,12 @@ public class CandidateController {
 
     @GetMapping("/hr/list-candidate")
     public List<Candidate> listcandidate() {
-
-
         return this.candidateDao.getListCandidateActive();
+    }
 
+    @GetMapping("/hr/list-candidate-hr/{id}")
+    public List<Candidate> listcandidatebyidhr(@PathVariable int id) {
+        return this.candidateDao.getListCandidateActiveByIdHr(id);
     }
 
     @GetMapping("/candidate/email/{email}")

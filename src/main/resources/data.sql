@@ -1,22 +1,27 @@
-INSERT INTO person (name,first_name,email,password,active)
-VALUES ("Pierre","jean","kk@l.com","$2a$10$0e0VsNHNubX94fd/YPAjLux/HYiZHBbMUV/WWBzhzuwo0dJRGj2oC",1);
+
 
 INSERT INTO person (name,first_name,email,password,active)
 VALUES ("Smith","John","k@l.com","$2a$10$9QO/duy6Xz/XZln1aFlT1.yGWfstXNwUXvosNhFikV4E0A/RMUN96",1);
-INSERT INTO person (name,first_name,email,password,active)
-VALUES ("Ro","naldo","k2@l.com","$2a$10$9QO/duy6Xz/XZln1aFlT1.yGWfstXNwUXvosNhFikV4E0A/RMUN96",1);
+
 INSERT INTO person (name,first_name,email,password,active)
 VALUES ("R","Wan","k1@l.com","$2a$10$9QO/duy6Xz/XZln1aFlT1.yGWfstXNwUXvosNhFikV4E0A/RMUN96",1);
 
 
 --UPDATE hr set number_hr = 1 where personId = 2;
 INSERT INTO hr ( personId, number_hr)
-VALUES(2,1),(4,2);
-
+VALUES(1,1),(2,2);
+INSERT INTO person (name,first_name,email,password,active,hr_personid)
+VALUES ("Ro","naldo","k2@l.com","$2a$10$9QO/duy6Xz/XZln1aFlT1.yGWfstXNwUXvosNhFikV4E0A/RMUN96",1,1);
+INSERT INTO person (name,first_name,email,password,active,hr_personid)
+VALUES ("Pierre","jean","kk@l.com","$2a$10$0e0VsNHNubX94fd/YPAjLux/HYiZHBbMUV/WWBzhzuwo0dJRGj2oC",1,1);
 INSERT INTO candidate ( personId, number_candidate)
-VALUES(1,1),(3,2);
+VALUES(3,1),(4,2);
 
+INSERT INTO person (name,first_name,email,password,active)
+VALUES ("Ro","W","k4@l.com","$2a$10$9QO/duy6Xz/XZln1aFlT1.yGWfstXNwUXvosNhFikV4E0A/RMUN96",1);
 
+INSERT INTO hr ( personId, number_hr)
+VALUES(5,3);
 
 INSERT INTO technology ( name_technology, active)
 VALUES('Java',1),
@@ -45,9 +50,9 @@ VALUES
 
 INSERT INTO test(active, name_test,hr_personid)
 VALUES
-(1,"Java débutant",2),
-(1,"C# confirmé",2),
-(1,"Javascipt",4);
+(1,"Java débutant",1),
+(1,"C# confirmé",1),
+(1,"Javascipt",2);
 
 INSERT INTO test_question(test_id,question_id)
 VALUES

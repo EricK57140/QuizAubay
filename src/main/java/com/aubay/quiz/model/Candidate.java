@@ -1,5 +1,7 @@
 package com.aubay.quiz.model;
 
+import com.aubay.quiz.View.ViewAnswers;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +20,7 @@ public class Candidate extends Person{
     public Candidate() {
 
     }
+
 
 
 
