@@ -22,6 +22,8 @@ public interface TestDao extends JpaRepository<Test,Integer>{
     @Query("FROM Test t WHERE t.nameTest LIKE %:search% ")
     List<Test> findTestsByTypingSearch(@Param("search") String search);
 
+    @Query("FROM Test t WHERE t.nameTest LIKE %:search% and t.active =1 and t.hr.personID = :id")
+    List<Test> findTestsByTypingSearch1(@Param("search") String search,@Param("id")int id);
 
 
 }

@@ -1,6 +1,7 @@
 package com.aubay.quiz.controller;
 import com.aubay.quiz.View.ViewAnswers;
 import com.aubay.quiz.View.ViewAnswersResult;
+import com.aubay.quiz.View.ViewQuestions;
 import com.aubay.quiz.View.ViewTest;
 import com.aubay.quiz.dao.*;
 import com.aubay.quiz.model.TestResult;
@@ -138,6 +139,11 @@ public class TestController {
     @GetMapping("/hr/list-test-by-search")
     public List<Test> testListBysearch(@Param("search") String search) {
         return this.testDao.findTestsByTypingSearch(search);
+    }
+
+    @GetMapping("/hr/listtest-searchbar/{id}")
+    public List<Test> listQuestionsByTest(@PathVariable int id,@Param("search") String search) {
+        return this.testDao.findTestsByTypingSearch1(search,id);
     }
 
     @PostMapping("/candidate/save-question-answer")
